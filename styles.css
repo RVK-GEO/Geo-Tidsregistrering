@@ -1,22 +1,57 @@
 body {
-    font-family: Arial, sans-serif;
     background-color: #f8f9fa;
+    font-family: Arial, sans-serif;
 }
 
-header {
-    background-color: #007bff; /* Blå farve til Geo-tema */
+.container {
+    max-width: 1200px;
 }
 
-form {
-    background-color: white;
+#calendar {
+    margin-top: 20px;
 }
 
-#resultat.success {
+.fc-daygrid-day-number {
+    font-size: 16px;
+}
+
+.fc-daygrid-day.fc-day-today {
+    border: 2px solid #007bff;
+}
+
+.fc-daygrid-day-number.green {
+    color: green;
+}
+
+.fc-daygrid-day-number.red {
+    color: red;
+}
+
+@media (max-width: 768px) {
+    #calendar {
+        order: 2;
+    }
+    #timeForm {
+        order: 1;
+    }
+}
+
+/* Geo-inspired colors */
+.btn-primary {
+    background-color: #0066cc;
+    border-color: #0066cc;
+}
+
+.btn-primary:hover {
+    background-color: #004d99;
+    border-color: #004d99;
+}
+
+h1 {
+    color: #0066cc;
+}
+
+.alert-success {
     background-color: #d4edda;
     color: #155724;
-}
-
-#resultat.error {
-    background-color: #f8d7da;
-    color: #721c24;
 }
