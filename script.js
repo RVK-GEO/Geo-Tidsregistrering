@@ -58,7 +58,6 @@ document.getElementById("submitRegister").addEventListener("click", () => {
     messageEl.className = "text-success";
     document.getElementById("registerForm").style.display = "none";
     document.getElementById("loginForm").style.display = "block";
-    // Ryd felter
     document.querySelectorAll("#registerForm input").forEach(input => input.value = "");
 });
 
@@ -88,7 +87,6 @@ document.getElementById("timeRegistrationForm").addEventListener("submit", (e) =
         registrations.push(registration);
         localStorage.setItem("registrations", JSON.stringify(registrations));
 
-        // Slet gamle data (3 måneder)
         const threeMonthsAgo = new Date();
         threeMonthsAgo.setDate(threeMonthsAgo.getDate() - 90);
         registrations = registrations.filter(r => new Date(r.timestamp) > threeMonthsAgo);
@@ -108,35 +106,38 @@ document.getElementById("timeRegistrationForm").addEventListener("submit", (e) =
 // Kalender
 function loadCalendar() {
     const calendarEl = document.getElementById("calendar");
-    calendarEl.innerHTML = "";
-    const calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: "dayGridMonth",
-        events: registrations.map(r => ({ title: r.projekt, date: r.date })),
-        dayCellContent: (args) => {
-            const reg = registrations.find(r => r.date === args.dateStr);
-            const className = reg ? "green" : "red";
-            const todayClass = args.isToday ? " fc-day-today" : "";
-            return { html: `<span class="${className}${todayClass}">${args.dayNumberText}</span>` };
-        },
-        height: "auto"
-    });
-    calendar.render();
+    if (calendarEl && !calendarEl.innerHTML) { // Check if not already rendered
+        const calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: "dayGridMonth",
+            events: registrations.map(r => ({ title: r.projekt, date: r.date })),
+            dayCellContent: (args) => {
+                const reg = registrations.find(r => r.date === args.dateStr);
+                const className = reg ? "green" : "red";
+                const todayClass = args.isToday ? " fc-day-today" : "";
+                return { html: `<span class="${className}${todayClass}">${args.dayNumberText}</span>` };
+            },
+            height: "auto"
+        });
+        calendar.render();
+    }
 }
 
 // Rapport
 function updateReport() {
     const reportList = document.getElementById("reportList");
-    reportList.innerHTML = "";
-    const activityTotals = {};
-    registrations.forEach(r => {
-        activityTotals[r.projekt] = (activityTotals[r.projekt] || 0) + 1;
-    });
-    Object.entries(activityTotals).forEach(([activity, count]) => {
-        const li = document.createElement("li");
-        li.className = "list-group-item";
-        li.textContent = `${activity}: ${count} registreringer`;
-        reportList.appendChild(li);
-    });
+    if (reportList) {
+        reportList.innerHTML = "";
+        const activityTotals = {};
+        registrations.forEach(r => {
+            activityTotals[r.projekt] = (activityTotals[r.projekt] || 0) + 1;
+        });
+        Object.entries(activityTotals).forEach(([activity, count]) => {
+            const li = document.createElement("li");
+            li.className = "list-group-item";
+            li.textContent = `${activity}: ${count} registreringer`;
+            reportList.appendChild(li);
+        });
+    }
 }
 
 // Auto-login til test
@@ -144,6 +145,12 @@ if (window.location.search.includes("autoLogin")) {
     currentUser = defaultUser;
     document.getElementById("loginSection").style.display = "none";
     document.getElementById("mainContent").style.display = "block";
+    loadCalendar();
+    updateReport();
+}
+
+// Load on login
+if (currentUser) {
     loadCalendar();
     updateReport();
 }

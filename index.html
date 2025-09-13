@@ -42,9 +42,10 @@
         <!-- Main Content -->
         <div id="mainContent" style="display: none;">
             <div class="row">
-                <!-- Time Registration Form -->
-                <div id="timeForm" class="col-md-6 mb-4">
-                    <div class="card p-4">
+                <!-- Left Column: Time Form and Report -->
+                <div class="col-md-6">
+                    <!-- Time Registration Form -->
+                    <div id="timeForm" class="card p-4 mb-4">
                         <h3>Registrer tid</h3>
                         <form id="timeRegistrationForm">
                             <div class="mb-3">
@@ -76,21 +77,17 @@
                         </form>
                         <div id="successMessage" class="alert alert-success mt-3" style="display: none;"></div>
                     </div>
-                </div>
 
-                <!-- Report Section -->
-                <div id="reportSection" class="col-md-6 mb-4">
-                    <div class="card p-4">
+                    <!-- Report Section -->
+                    <div id="reportSection" class="card p-4">
                         <h3>Rapport</h3>
                         <ul id="reportList" class="list-group"></ul>
                     </div>
                 </div>
-            </div>
 
-            <!-- Calendar Section -->
-            <div class="row">
-                <div class="col-12">
-                    <div id="calendar" class="card p-3"></div>
+                <!-- Right Column: Calendar -->
+                <div class="col-md-6">
+                    <div id="calendar" class="card p-3" style="min-height: 400px;"></div>
                 </div>
             </div>
         </div>

@@ -31,6 +31,10 @@ header {
     #calendar {
         margin-top: 20px;
     }
+    .col-md-6 {
+        flex: 100%;
+        max-width: 100%;
+    }
 }
 
 .btn-primary {
