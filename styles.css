@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 body {
     background-color: #f8f9fa;
     font-family: Arial, sans-serif;
@@ -70,4 +71,27 @@ h1, h3 {
 .alert-success {
     background-color: #d4edda;
     color: #155724;
+=======
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+}
+
+header {
+    background-color: #007bff; /* Blå farve til Geo-tema */
+}
+
+form {
+    background-color: white;
+}
+
+#resultat.success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+#resultat.error {
+    background-color: #f8d7da;
+    color: #721c24;
+>>>>>>> 07097daf6a442bf437e6203ad127460204efc532
 }
