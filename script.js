@@ -6,8 +6,9 @@ const defaultUser = {
 };
 let currentUser = null;
 
-// Load users from localStorage
+// Load users and registrations from localStorage
 let users = JSON.parse(localStorage.getItem("users")) || [defaultUser];
+let registrations = JSON.parse(localStorage.getItem("registrations")) || [];
 
 // Login and Register Logic
 document.getElementById("loginButton").addEventListener("click", () => {
@@ -74,8 +75,6 @@ document.getElementById("projekt").addEventListener("change", (e) => {
 });
 
 // Time Registration Logic
-let registrations = JSON.parse(localStorage.getItem("registrations")) || [];
-
 document.getElementById("timeRegistrationForm").addEventListener("submit", (e) => {
     e.preventDefault();
     const projekt = document.getElementById("projekt").value === "custom" ? document.getElementById("customProjekt").value : document.getElementById("projekt").value;
@@ -110,34 +109,38 @@ document.getElementById("timeRegistrationForm").addEventListener("submit", (e) =
 
 // Calendar Logic
 function loadCalendar() {
-    document.getElementById("calendar").innerHTML = "";
     const calendarEl = document.getElementById("calendar");
-    const calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: "dayGridMonth",
-        events: registrations.map(r => ({ title: r.projekt, date: r.date })),
-        dayCellContent: (args) => {
-            const reg = registrations.find(r => r.date === args.dateStr);
-            let className = reg ? "green" : "red";
-            if (args.isToday) className += " fc-day-today";
-            return { html: `<span class="${className}">${args.dayNumberText}</span>` };
-        },
-        height: "auto"
-    });
-    calendar.render();
+    if (calendarEl) {
+        calendarEl.innerHTML = "";
+        const calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: "dayGridMonth",
+            events: registrations.map(r => ({ title: r.projekt, date: r.date })),
+            dayCellContent: (args) => {
+                const reg = registrations.find(r => r.date === args.dateStr);
+                let className = reg ? "green" : "red";
+                if (args.isToday) className += " fc-day-today";
+                return { html: `<span class="${className}">${args.dayNumberText}</span>` };
+            },
+            height: "auto"
+        });
+        calendar.render();
+    }
 }
 
 // Report Logic
 function updateReport() {
     const reportList = document.getElementById("reportList");
-    reportList.innerHTML = "";
-    const activityTotals = {};
-    registrations.forEach(r => {
-        activityTotals[r.projekt] = (activityTotals[r.projekt] || 0) + 1;
-    });
-    for (let activity in activityTotals) {
-        const li = document.createElement("li");
-        li.textContent = `${activity}: ${activityTotals[activity]} registreringer`;
-        reportList.appendChild(li);
+    if (reportList) {
+        reportList.innerHTML = "";
+        const activityTotals = {};
+        registrations.forEach(r => {
+            activityTotals[r.projekt] = (activityTotals[r.projekt] || 0) + 1;
+        });
+        for (let activity in activityTotals) {
+            const li = document.createElement("li");
+            li.textContent = `${activity}: ${activityTotals[activity]} registreringer`;
+            reportList.appendChild(li);
+        }
     }
 }
 
@@ -147,6 +150,12 @@ if (window.location.search.includes("autoLogin")) {
     document.getElementById("loginSection").style.display = "none";
     document.getElementById("timeForm").style.display = "block";
     document.getElementById("reportSection").style.display = "block";
+    loadCalendar();
+    updateReport();
+}
+
+// Load calendar and report on page load if logged in
+if (currentUser) {
     loadCalendar();
     updateReport();
 }

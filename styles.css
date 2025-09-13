@@ -7,8 +7,21 @@ body {
     max-width: 1200px;
 }
 
+.d-flex {
+    display: flex;
+}
+
+.flex-md-row {
+    flex-direction: row;
+}
+
+.flex-column {
+    flex-direction: column;
+}
+
 #calendar {
-    margin-top: 20px;
+    margin-top: 0;
+    min-height: 400px;
 }
 
 .fc-daygrid-day-number {
@@ -20,18 +33,21 @@ body {
 }
 
 .fc-daygrid-day-number.green {
-    color: green;
+    color: green !important;
 }
 
 .fc-daygrid-day-number.red {
-    color: red;
+    color: red !important;
 }
 
 @media (max-width: 768px) {
+    .d-flex {
+        flex-direction: column;
+    }
     #calendar {
         order: 2;
     }
-    #timeForm {
+    #timeForm, #reportSection {
         order: 1;
     }
 }
@@ -47,7 +63,7 @@ body {
     border-color: #004d99;
 }
 
-h1 {
+h1, h3 {
     color: #0066cc;
 }
 

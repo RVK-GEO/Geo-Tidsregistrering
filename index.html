@@ -32,48 +32,51 @@
             <p id="loginMessage" class="text-success"></p>
         </div>
 
-        <!-- Time Registration Form -->
-        <div id="timeForm" style="display: none;">
-            <h3>Registrer tid</h3>
-            <form id="timeRegistrationForm" class="mb-4">
-                <div class="mb-3">
-                    <label for="projekt" class="form-label">Aktivitet:</label>
-                    <select id="projekt" class="form-select mb-2" required>
-                        <option value="">Vælg en aktivitet</option>
-                        <option value="Tilsyn Boring">Tilsyn Boring</option>
-                        <option value="Tilsyn Afgravning">Tilsyn Afgravning</option>
-                        <option value="Håndboring">Håndboring</option>
-                        <option value="Vandprøver">Vandprøver</option>
-                        <option value="Poreluft">Poreluft</option>
-                        <option value="custom">Anden aktivitet (indtast selv)</option>
-                    </select>
-                    <input type="text" id="customProjekt" class="form-control mb-2" style="display: none;" placeholder="Indtast aktivitet">
-                </div>
-                <div class="mb-3">
-                    <label for="startTid" class="form-label">Starttid:</label>
-                    <input type="time" id="startTid" class="form-control" step="900" required>
-                </div>
-                <div class="mb-3">
-                    <label for="slutTid" class="form-label">Sluttid:</label>
-                    <input type="time" id="slutTid" class="form-control" step="900" required>
-                </div>
-                <div class="mb-3">
-                    <label for="beskrivelse" class="form-label">Beskrivelse:</label>
-                    <textarea id="beskrivelse" class="form-control" rows="3" required></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary">Registrer tid</button>
-            </form>
-            <div id="successMessage" class="alert alert-success" style="display: none;"></div>
-        </div>
+        <!-- Main Content with Flex Layout -->
+        <div class="d-flex flex-column flex-md-row gap-4">
+            <!-- Time Registration Form -->
+            <div id="timeForm" style="display: none; flex: 1;">
+                <h3>Registrer tid</h3>
+                <form id="timeRegistrationForm" class="mb-4">
+                    <div class="mb-3">
+                        <label for="projekt" class="form-label">Aktivitet:</label>
+                        <select id="projekt" class="form-select mb-2" required>
+                            <option value="">Vælg en aktivitet</option>
+                            <option value="Tilsyn Boring">Tilsyn Boring</option>
+                            <option value="Tilsyn Afgravning">Tilsyn Afgravning</option>
+                            <option value="Håndboring">Håndboring</option>
+                            <option value="Vandprøver">Vandprøver</option>
+                            <option value="Poreluft">Poreluft</option>
+                            <option value="custom">Anden aktivitet (indtast selv)</option>
+                        </select>
+                        <input type="text" id="customProjekt" class="form-control mb-2" style="display: none;" placeholder="Indtast aktivitet">
+                    </div>
+                    <div class="mb-3">
+                        <label for="startTid" class="form-label">Starttid:</label>
+                        <input type="time" id="startTid" class="form-control" step="900" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="slutTid" class="form-label">Sluttid:</label>
+                        <input type="time" id="slutTid" class="form-control" step="900" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="beskrivelse" class="form-label">Beskrivelse:</label>
+                        <textarea id="beskrivelse" class="form-control" rows="3" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Registrer tid</button>
+                </form>
+                <div id="successMessage" class="alert alert-success" style="display: none;"></div>
+            </div>
 
-        <!-- Report Section -->
-        <div id="reportSection" style="display: none;">
-            <h3>Rapport</h3>
-            <ul id="reportList"></ul>
-        </div>
+            <!-- Report Section -->
+            <div id="reportSection" style="display: none; flex: 1;">
+                <h3>Rapport</h3>
+                <ul id="reportList"></ul>
+            </div>
 
-        <!-- Calendar Section -->
-        <div id="calendar" class="mt-4"></div>
+            <!-- Calendar Section -->
+            <div id="calendar" class="mt-4" style="flex: 1; min-width: 300px;"></div>
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
