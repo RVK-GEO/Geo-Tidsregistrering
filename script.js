@@ -22,8 +22,10 @@ document.getElementById("loginButton").addEventListener("click", () => {
         document.getElementById("mainContent").style.display = "block";
         messageEl.textContent = `Velkommen, ${user.name}!`;
         messageEl.className = "text-success";
-        loadCalendar();
-        updateReport();
+        setTimeout(() => {
+            loadCalendar();
+            updateReport();
+        }, 100); // Delay to ensure DOM is ready
     } else {
         messageEl.textContent = "Forkert email eller adgangskode.";
         messageEl.className = "error";
@@ -105,8 +107,9 @@ document.getElementById("timeRegistrationForm").addEventListener("submit", (e) =
 
 // Kalender
 function loadCalendar() {
-    const calendarEl = document.getElementById("calendar");
-    if (calendarEl && !calendarEl.innerHTML) { // Check if not already rendered
+    const calendarEl = document.getElementById("calendarDiv");
+    if (calendarEl && typeof FullCalendar !== 'undefined') {
+        calendarEl.innerHTML = "";
         const calendar = new FullCalendar.Calendar(calendarEl, {
             initialView: "dayGridMonth",
             events: registrations.map(r => ({ title: r.projekt, date: r.date })),
@@ -119,6 +122,8 @@ function loadCalendar() {
             height: "auto"
         });
         calendar.render();
+    } else {
+        console.error("FullCalendar not loaded or element not found");
     }
 }
 
@@ -145,12 +150,8 @@ if (window.location.search.includes("autoLogin")) {
     currentUser = defaultUser;
     document.getElementById("loginSection").style.display = "none";
     document.getElementById("mainContent").style.display = "block";
-    loadCalendar();
-    updateReport();
-}
-
-// Load on login
-if (currentUser) {
-    loadCalendar();
-    updateReport();
+    setTimeout(() => {
+        loadCalendar();
+        updateReport();
+    }, 100);
 }
