@@ -10,6 +10,10 @@ let currentUser = null;
 let users = JSON.parse(localStorage.getItem("users")) || [defaultUser];
 let registrations = JSON.parse(localStorage.getItem("registrations")) || [];
 
+// Set default date to today
+const today = new Date().toISOString().split("T")[0];
+document.getElementById("date").value = today;
+
 // Login Logic
 document.getElementById("loginButton").addEventListener("click", () => {
     const email = document.getElementById("loginEmail").value.trim();
@@ -25,7 +29,7 @@ document.getElementById("loginButton").addEventListener("click", () => {
         setTimeout(() => {
             loadCalendar();
             updateReport();
-        }, 100); // Delay to ensure DOM is ready
+        }, 100);
     } else {
         messageEl.textContent = "Forkert email eller adgangskode.";
         messageEl.className = "error";
@@ -78,13 +82,13 @@ document.getElementById("projekt").addEventListener("change", (e) => {
 // Time Registration
 document.getElementById("timeRegistrationForm").addEventListener("submit", (e) => {
     e.preventDefault();
+    const date = document.getElementById("date").value;
     const projekt = document.getElementById("projekt").value === "custom" ? document.getElementById("customProjekt").value.trim() : document.getElementById("projekt").value;
     const startTid = document.getElementById("startTid").value;
     const slutTid = document.getElementById("slutTid").value;
     const beskrivelse = document.getElementById("beskrivelse").value.trim();
-    const date = new Date().toISOString().split("T")[0];
 
-    if (projekt && startTid && slutTid && beskrivelse && currentUser) {
+    if (date && projekt && startTid && slutTid && beskrivelse && currentUser) {
         const registration = { date, projekt, startTid, slutTid, beskrivelse, user: currentUser.name, timestamp: new Date().toISOString() };
         registrations.push(registration);
         localStorage.setItem("registrations", JSON.stringify(registrations));
@@ -100,6 +104,7 @@ document.getElementById("timeRegistrationForm").addEventListener("submit", (e) =
 
         document.getElementById("timeRegistrationForm").reset();
         document.getElementById("customProjekt").style.display = "none";
+        document.getElementById("date").value = today; // Reset to today
         loadCalendar();
         updateReport();
     }
@@ -113,13 +118,17 @@ function loadCalendar() {
         const calendar = new FullCalendar.Calendar(calendarEl, {
             initialView: "dayGridMonth",
             events: registrations.map(r => ({ title: r.projekt, date: r.date })),
+            dateClick: (info) => {
+                document.getElementById("date").value = info.dateStr;
+            },
             dayCellContent: (args) => {
                 const reg = registrations.find(r => r.date === args.dateStr);
                 const className = reg ? "green" : "red";
                 const todayClass = args.isToday ? " fc-day-today" : "";
                 return { html: `<span class="${className}${todayClass}">${args.dayNumberText}</span>` };
             },
-            height: "auto"
+            height: "auto",
+            initialDate: today // Start on today's date
         });
         calendar.render();
     } else {
