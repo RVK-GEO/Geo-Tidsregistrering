@@ -1,36 +1,18 @@
-<<<<<<< HEAD
 body {
     background-color: #f8f9fa;
     font-family: Arial, sans-serif;
 }
 
-.container {
-    max-width: 1200px;
+header {
+    background-color: #0066cc;
 }
 
-.d-flex {
-    display: flex;
-}
-
-.flex-md-row {
-    flex-direction: row;
-}
-
-.flex-column {
-    flex-direction: column;
+.card {
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
 }
 
 #calendar {
-    margin-top: 0;
     min-height: 400px;
-}
-
-.fc-daygrid-day-number {
-    font-size: 16px;
-}
-
-.fc-daygrid-day.fc-day-today {
-    border: 2px solid #007bff;
 }
 
 .fc-daygrid-day-number.green {
@@ -41,19 +23,16 @@ body {
     color: red !important;
 }
 
+.fc-daygrid-day.fc-day-today {
+    border: 2px solid #007bff !important;
+}
+
 @media (max-width: 768px) {
-    .d-flex {
-        flex-direction: column;
-    }
     #calendar {
-        order: 2;
-    }
-    #timeForm, #reportSection {
-        order: 1;
+        margin-top: 20px;
     }
 }
 
-/* Geo-inspired colors */
 .btn-primary {
     background-color: #0066cc;
     border-color: #0066cc;
@@ -61,37 +40,12 @@ body {
 
 .btn-primary:hover {
     background-color: #004d99;
-    border-color: #004d99;
 }
 
 h1, h3 {
     color: #0066cc;
 }
 
-.alert-success {
-    background-color: #d4edda;
-    color: #155724;
-=======
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f8f9fa;
-}
-
-header {
-    background-color: #007bff; /* Blå farve til Geo-tema */
-}
-
-form {
-    background-color: white;
-}
-
-#resultat.success {
-    background-color: #d4edda;
-    color: #155724;
-}
-
-#resultat.error {
-    background-color: #f8d7da;
-    color: #721c24;
->>>>>>> 07097daf6a442bf437e6203ad127460204efc532
+#loginMessage.error {
+    color: #dc3545;
 }
